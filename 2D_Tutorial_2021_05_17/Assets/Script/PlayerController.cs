@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기본 동작, 자동상속
 {
+    [SerializeField]
+    float m_speed = 3f;
+    [SerializeField]
+    Vector3 m_dir;
+    [SerializeField]
+    Animator m_animator;
+        
     // Start is called before the first frame update
     void Start()
     {
@@ -12,14 +19,30 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
 
     void KeyControll()
     {
-        if(Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            gameObject.transform.position += Vector3.left * 0.1f;
+            m_dir = Vector3.zero;
+            m_animator.SetBool("IsMove", false);
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+
+        if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            gameObject.transform.position += Vector3.right * 0.1f;
+            m_dir = Vector3.zero;
+            m_animator.SetBool("IsMove", false);
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            m_dir = Vector3.left;
+            m_animator.SetBool("IsMove", true);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            m_dir = Vector3.right;
+            m_animator.SetBool("IsMove", true);
+        }
+        gameObject.transform.position += m_dir * m_speed * Time.deltaTime;
     }
 
     // Update is called once per frame // 반복
