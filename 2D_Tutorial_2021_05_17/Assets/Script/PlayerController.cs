@@ -10,11 +10,15 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
     Vector3 m_dir;
     [SerializeField]
     Animator m_animator;
-        
+    [SerializeField]
+    SpriteRenderer m_sprRenderer;
+    
     // Start is called before the first frame update
     void Start()
     {
         
+        m_animator = gameObject.GetComponent<Animator>();
+        m_sprRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
     void KeyControll()
@@ -35,12 +39,15 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
         {
             m_dir = Vector3.left;
             m_animator.SetBool("IsMove", true);
+            m_sprRenderer.flipX = false;
+
         }
-        
+
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             m_dir = Vector3.right;
             m_animator.SetBool("IsMove", true);
+            m_sprRenderer.flipX = true;
         }
         gameObject.transform.position += m_dir * m_speed * Time.deltaTime;
     }
