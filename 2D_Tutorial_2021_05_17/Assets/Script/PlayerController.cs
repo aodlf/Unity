@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
     [SerializeField]
     GameObject m_bulletPrefab;
     [SerializeField]
+    GameObject m_explosionPrefab;
+    [SerializeField]
     Transform m_firePos;
 
     Rigidbody2D m_rigidBody;
@@ -25,7 +27,7 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
         var obj = Instantiate(m_bulletPrefab);
         //obj.transform.position = m_firePos.position;
         var bullet = obj.GetComponent<BulletController>();
-        bullet.SetBullet(m_firePos.position, transform.eulerAngles.y != 0 ? Vector3.right : Vector3.left);
+        bullet.SetBullet(m_firePos.position, transform.eulerAngles.y != 0 ? Vector3.right : Vector3.left, m_bulletPrefab);
     }
     #endregion
 

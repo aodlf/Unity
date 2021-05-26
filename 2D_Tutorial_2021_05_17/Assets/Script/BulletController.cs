@@ -11,14 +11,64 @@ public class BulletController : MonoBehaviour
     SpriteRenderer m_sprRenderer;
     [SerializeField]
     float m_lifetime = 3f;
+    [SerializeField]
+    Rigidbody2D m_rigidBody;
+    GameObject m_explosionPrefab;
+
     float m_time;
 
-    public void SetBullet(Vector3 pos, Vector3 dir)
+    public void SetBullet(Vector3 pos, Vector3 dir, GameObject prefab)
     {
         transform.position = pos;
         m_dir = dir;
         m_sprRenderer.flipY = dir == Vector3.right ? true : false;
+        m_explosionPrefab = prefab;
+        //m_rigidBody.AddForce(m_dir * m_speed, ForceMode2D.Impulse);
     }
+    void CreateEffect(Vector3 pos)
+    {
+        var obj = Instantiate(m_explosionPrefab);
+        var effect = obj.GetComponent<EffectController>();
+        effect.SetEffect(pos);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Background"))
+        {
+            CreateEffect(transform.position);
+            Destroy(gameObject);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        
+    }
+
+    //void OnCollisionEnter2D(Collision2D collision) // 충돌 타이밍
+    //{
+    //    if(collision.gameObject.CompareTag("Background"))
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
+
+    //void OnCollisionExit2D(Collision2D collision)
+    //{
+        
+    //}
+
+    //void OnCollisionStay2D(Collision2D collision)
+    //{
+        
+    //}
+
     // Start is called before the first frame update
     void Start()
     {
