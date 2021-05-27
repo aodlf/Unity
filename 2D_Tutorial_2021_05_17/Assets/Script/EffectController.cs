@@ -20,9 +20,9 @@ public class EffectController : MonoBehaviour
     {
         var stateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
 
-        if(stateInfo.normalizedTime >= 1f)
+        if (stateInfo.normalizedTime >= 1f)
         {
             Destroy(gameObject);
         }
     }
-}
+} 

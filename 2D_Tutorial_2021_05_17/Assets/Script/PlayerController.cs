@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
     GameObject m_explosionPrefab;
     [SerializeField]
     Transform m_firePos;
+    bool m_isFall;
+    bool m_isGrounded;
 
     Rigidbody2D m_rigidBody;
 
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
         var obj = Instantiate(m_bulletPrefab);
         //obj.transform.position = m_firePos.position;
         var bullet = obj.GetComponent<BulletController>();
-        bullet.SetBullet(m_firePos.position, transform.eulerAngles.y != 0 ? Vector3.right : Vector3.left, m_bulletPrefab);
+        bullet.SetBullet(m_firePos.position, transform.eulerAngles.y != 0 ? Vector3.right : Vector3.left, m_explosionPrefab);
     }
     #endregion
 
@@ -61,6 +63,11 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
             transform.eulerAngles = new Vector3(0f, 180f, 0f);           
         }
 
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {          
+            m_animator.SetInteger("JumpState", 1);
+            m_rigidBody.AddForce(Vector3.up * 8f, ForceMode2D.Impulse);
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             m_animator.SetBool("IsShoot", true);
@@ -69,6 +76,18 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
         if (Input.GetKeyUp(KeyCode.Space))
         {
             m_animator.SetBool("IsShoot", false);
+        }
+        Debug.Log(m_rigidBody.velocity.y);
+        if (!m_isGrounded)
+        {
+            if (m_rigidBody.velocity.y < 0f)
+            {
+                if (!m_isFall)
+                {
+                    m_animator.SetInteger("JumpState", 2);
+                    m_isFall = true;
+                }
+            }
         }
         var stateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
         if (!stateInfo.IsName("Shoot"))
@@ -86,7 +105,21 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
         m_rigidBody = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Ground"))
+        {
+            m_isGrounded = true;
+            m_animator.SetInteger("JumpState", 0);
+            m_isFall = false;
+        }
+    }
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+            m_isGrounded = false;
+    }
+
     //void FixedUpdate()
     //{
     //    m_rigidBody.AddForce(m_dir * m_speed, ForceMode2D.Force);

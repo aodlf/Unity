@@ -6,7 +6,7 @@ public class BulletController : MonoBehaviour
 {
     Vector3 m_dir = Vector3.left;
     [SerializeField]
-    float m_speed = 10f;
+    float m_speed = 20f;
     [SerializeField]
     SpriteRenderer m_sprRenderer;
     [SerializeField]
@@ -34,10 +34,17 @@ public class BulletController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Background"))
+        if(collision.CompareTag("Background") || collision.CompareTag("Monster"))
         {
             CreateEffect(transform.position);
             Destroy(gameObject);
+            if(collision.CompareTag("Monster"))
+            {
+                var mon = collision.GetComponent<MonsterController>();
+                mon.SetDamage();
+            }
+
+            
         }
     }
 
