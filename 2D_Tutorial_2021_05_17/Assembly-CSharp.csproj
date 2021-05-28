@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\BulletController.cs" />
+    <Compile Include="Assets\Script\CoroutineTest.cs" />
     <Compile Include="Assets\Script\EffectController.cs" />
     <Compile Include="Assets\Script\MonsterController.cs" />
     <Compile Include="Assets\Script\PickingTest.cs" />

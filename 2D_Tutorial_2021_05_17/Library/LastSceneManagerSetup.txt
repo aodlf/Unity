@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Picking.unity
+- path: Assets/Scenes/Coroutine.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
