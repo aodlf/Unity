@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class CoroutineTest : MonoBehaviour
 {
@@ -8,6 +9,31 @@ public class CoroutineTest : MonoBehaviour
     SpriteRenderer m_sprRenderer;
     float m_time;
     int m_count;
+    Coroutine m_counterCoroutine;
+    Texture2D m_texture;
+
+    private void OnGUI()
+    {
+        if (m_texture != null)
+        {
+            Rect rt = new Rect((Screen.width - m_texture.width) / 2, (Screen.height - m_texture.height) / 2, m_texture.width, m_texture.height);
+            GUI.DrawTexture(rt, m_texture);
+        }
+    }
+
+    IEnumerator LoadTexture(string url)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+        yield return request.SendWebRequest();
+        if(request.isDone)
+        {
+            var texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        }
+        else if(string.IsNullOrEmpty(request.error))
+        {
+            Debug.LogError(request.error);
+        }
+    }
     
     
 
@@ -48,6 +74,8 @@ public class CoroutineTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(LoadTexture("https://i.pinimg.com/236x/72/d1/e1/72d1e1447007df5930c350da813840fb.jpg"));
+
         StartCoroutine("Counter");
         //Debug.Log("Start");
         //StartCoroutine("DrawMessage");

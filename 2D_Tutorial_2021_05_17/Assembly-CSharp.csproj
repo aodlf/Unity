@@ -70,6 +70,7 @@
     <Compile Include="Assets\Script\MonsterController.cs" />
     <Compile Include="Assets\Script\PickingTest.cs" />
     <Compile Include="Assets\Script\PlayerController.cs" />
+    <Compile Include="Assets\Script\TitleController.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Unity/2D_Tutorial_2021_05_17/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
