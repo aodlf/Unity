@@ -201,6 +201,9 @@
     <Compile Include="Assets\Script\BulletController.cs" />
     <Compile Include="Assets\Script\CoroutineTest.cs" />
     <Compile Include="Assets\Script\EffectController.cs" />
+    <Compile Include="Assets\Script\GameItem.cs" />
+    <Compile Include="Assets\Script\Inventory.cs" />
+    <Compile Include="Assets\Script\ItemSlot.cs" />
     <Compile Include="Assets\Script\MonsterController.cs" />
     <Compile Include="Assets\Script\PickingTest.cs" />
     <Compile Include="Assets\Script\PlayerController.cs" />
