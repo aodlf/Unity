@@ -24,7 +24,21 @@ public class Inventory : MonoBehaviour
     Transform m_slotCursor;
     int m_itemSlotMax = 24;
     List<ItemSlot> m_slotList = new List<ItemSlot>();
+    public void OnSelectSlot(ItemSlot slot)
+    {
+        for(int i =0; i < m_slotList.Count; i++)
+        {
+            //if (m_slotList[i].IsSelect)
+            //{
+            //    m_slotList[i].IsSelect = false;
+            //}
+            var result = m_slotList.Find(obj => obj.IsSelect);
+            if (result != null) result.IsSelect = false;
 
+            slot.IsSelect = true;
+            m_slotCursor
+        }
+    }
     public void CreateGameItem()
     {
         for(int i = 0; i < m_slotList.Count; i++)
@@ -55,6 +69,7 @@ public class Inventory : MonoBehaviour
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localScale = Vector3.one;
             var slot = obj.GetComponent<ItemSlot>();
+            slot.InitSlot(this);
             m_slotList.Add(slot);
         }
     }
@@ -65,7 +80,7 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        InitInventory();
     }
 
     // Update is called once per frame
