@@ -22,8 +22,24 @@ public class Inventory : MonoBehaviour
     UIGrid m_slotGrid;
     [SerializeField]
     Transform m_slotCursor;
+    [SerializeField]
+    TweenScale m_tween;
     int m_itemSlotMax = 24;
     List<ItemSlot> m_slotList = new List<ItemSlot>();
+
+    public void Open()
+    {
+        if(!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+            m_tween.ResetToBeginning();
+            m_tween.PlayForward();
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
     public void OnSelectSlot(ItemSlot slot)
     {
         for(int i =0; i < m_slotList.Count; i++)
@@ -36,14 +52,14 @@ public class Inventory : MonoBehaviour
             if (result != null) result.IsSelect = false;
 
             slot.IsSelect = true;
-            m_slotCursor
+            
         }
     }
     public void CreateGameItem()
     {
         for(int i = 0; i < m_slotList.Count; i++)
         {
-            if(m_slotList[i].isEmpty)
+            if(m_slotList[i].IsEmpty)
             {
                 ItemType type = (ItemType)Random.Range((int)ItemType.Ball, (int)ItemType.Max);
                 int count = Random.Range(1, 5);

@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
     GameObject m_explosionPrefab;
     [SerializeField]
     Transform m_firePos;
+    [SerializeField]
+    Inventory m_myInven;
     bool m_isFall;
     bool m_isGrounded;
 
@@ -35,6 +37,11 @@ public class PlayerController : MonoBehaviour // mono로 동작, 유니티 기�
 
     void KeyControll()
     {
+        if (Input.GetKeyUp(KeyCode.I))
+        {
+            m_myInven.Open();
+        }
+
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
             m_dir = Vector3.zero;

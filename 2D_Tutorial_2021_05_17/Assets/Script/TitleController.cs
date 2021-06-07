@@ -12,13 +12,20 @@ public class TitleController : MonoBehaviour
     string m_pass = "1234";
     int m_select;
     string[] m_weaponList = new string[] { "단검", "장검", "양손검", "바스타드", "할버드", "로켓런쳐"  };
-    
+    AsyncOperation m_loadingInfo;
+    [SerializeField]
+    UIPanel m_loadingPanel;
+    [SerializeField]
+    UIProgressBar m_loadingBar;
+    [SerializeField]
+    UILabel m_loadingProgressLable;
     public void GoNextScene()
     {
-        SceneManager.LoadScene("Game");
+        m_loadingInfo = SceneManager.LoadSceneAsync("Game");
+        m_loadingPanel.gameObject.SetActive(true);
     }
-    void OnGUI()
-    {
+    //void OnGUI()
+    //{
         //if(GUI.Button(new Rect((Screen.width - 150)/2, (Screen.height - 50)/2, 150, 50), "START"))
         //{
         //    SceneManager.LoadScene("Game");
@@ -43,16 +50,28 @@ public class TitleController : MonoBehaviour
         //    m_select = GUILayout.SelectionGrid(m_select, m_weaponList, 1);
         //}
         //GUILayout.EndArea();
-    }
+    //}
     // Start is called before the first frame update
     void Start()
     {
-        Screen.SetResolution(1280, 720, true);
+        //Screen.SetResolution(1280, 720, true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(m_loadingInfo != null)
+        {
+            if(m_loadingInfo.isDone)
+            {
+
+            }
+            else
+            {
+                //Debug.Log(Mathf.RoundToInt(m_loadingInfo.progress * 100));
+                m_loadingBar.value = m_loadingInfo.progress;
+                m_loadingProgressLable.text = Mathf.RoundToInt(m_loadingInfo.progress * 100).ToString()+"%";
+            }
+        }
     }
 }
